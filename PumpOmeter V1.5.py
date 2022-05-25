@@ -4,6 +4,7 @@ import openpyxl
 import time
 import os
 import datetime
+from pygame import mixer
 
 os.system('cls')
 print("PumpOmeter v1.5 Beta")
@@ -68,8 +69,24 @@ while tempg>0:
             contador2 = contador2 + 1
     for each in sortdict:
         print(each + ': ' + str(sortdict[each]) + "%")
-        if float(sortdict[each]) >= 2:
-            print(" ")
+        if float(sortdict[each]) >= 2 and float(sortdict[each]) < 3:
+            mixer.init()
+            mixer.music.load("Alarm02.wav")
+            mixer.music.play()
+            print("-------------------------")
+            print(each + " esta subiendo!!")
+            print("-------------------------")
+        if float(sortdict[each]) >= 3 and float(sortdict[each]) < 5:
+            mixer.init()
+            mixer.music.load("Alarm10.wav")
+            mixer.music.play()
+            print("-------------------------")
+            print(each + " esta subiendo mas!!")
+            print("-------------------------")
+        if float(sortdict[each]) >= 5:
+            mixer.init()
+            mixer.music.load("tada.wav")
+            mixer.music.play()
             print("-------------------------")
             print(each + " esta pumpeando!!")
             print("-------------------------")
