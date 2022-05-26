@@ -40,13 +40,14 @@ print(" ")
 tempanclajes = int(input("Cada cuantos minutos queres refrescar el alclaje?: "))
 anclajestot = tempgx / tempanclajes
 cantrefresh = tempanclajes * 6
+horadeinicio = datetime.datetime.now()
+horadeinicio2 = datetime.datetime.strftime(horadeinicio, '%H:%M')
 while anclajestot > 0:
     cantrefresh1 = cantrefresh
     hora = datetime.datetime.now()
     hora2 = datetime.datetime.strftime(hora, '%H:%M')
     print(" ")
     print("Generando Aclaje de precios, espere 10 seg")
-    print("Hora de Anclaje: ", hora2)
     anclaje = requests.get(url)
     pump = anclaje.json()
     contador = 2
@@ -97,6 +98,7 @@ while anclajestot > 0:
                 print("-------------------------")
         print(" ")
         print("****************")
+        print("Hora de Inicio: ", horadeinicio2)
         print("Hora de Anclaje: ", hora2)
         print("Quedan", int(anclajestot - 1), "anclajes reseteables cada", tempanclajes, "minutos")
         print("Quedan", cantrefresh1 - 1, "refresh de este anclaje")
