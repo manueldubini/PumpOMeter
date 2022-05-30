@@ -5,20 +5,18 @@ import time
 import os
 import datetime
 from pygame import mixer
-
+import pyautogui as pg
+import webbrowser as web
 
 os.system('cls')
-print(" PumpOmeter v1.51 Beta")
-print(" ")
-print(" Bienvenido! Exito en tus Trades!!")
-print(" ")
-print(" Que par deseas trabajar? Opciones:")
-print(" ")
-print(" a) BUSD")
-print(" b) USDT")
-print(" c) ETH")
-print(" d) BTC")
-print(" ")
+print(" PumpOmeter v1.6 Beta\n \n Bienvenido! Exito en tus Trades!!\n")
+whats = input(" Desea recibir avisos por Whatsapp? s/n: ")
+if whats == 's':
+    telefono = input(" Ingrese el numero de telefono: ")
+    #web.open('https://web.whatsapp.com/send?phone=+549' + telefono)
+    print(" Espere mientras se abre Whatsapp Web")
+    #time.sleep(60)
+print("\n Que par deseas trabajar? Opciones:\n\n a) BUSD\n b) USDT\n c) ETH\n d) BTC\n")
 par = input(" Elija una opcion de la lista (a,b,c,d): ")
 if par == 'a':
     PAR = 'BUSD'
@@ -43,12 +41,19 @@ anclajestot = tempgx / tempanclajes
 cantrefresh = tempanclajes * 6
 horadeinicio = datetime.datetime.now()
 horadeinicio2 = datetime.datetime.strftime(horadeinicio, '%H:%M')
+if whats == 's':
+    time.sleep(5)
+    pg.write(" --------Aviso_PumpOmeter!-------- Iniciando nuevo ciclo de " + str(tempgx) + " minutos de trabajo con anclajes cada " + str(tempanclajes) + " minutos... Exitos en tus Trades!!")
+    pg.press('enter')
+
 while anclajestot > 0:
+    if whats == 's':
+        pg.write(" --------Aviso_PumpOmeter!-------- ---------Anclaje_Reseteado---------")
+        pg.press('enter')
     cantrefresh1 = cantrefresh
     hora = datetime.datetime.now()
     hora2 = datetime.datetime.strftime(hora, '%H:%M')
-    print(" ")
-    print(" Generando Aclaje de precios, espere 10 segundos")
+    print("\n Generando Aclaje de precios, espere 10 segundos")
     anclaje = requests.get(url)
     pump = anclaje.json()
     contador = 2
@@ -83,6 +88,9 @@ while anclajestot > 0:
                 print(" -------------------------")
                 print(" " + each + " esta subiendo!!")
                 print(" -------------------------")
+                if whats == 's':
+                    pg.write(" --------Aviso_PumpOmeter!-------- " + each + " subio " + str(float(sortdict[each])) + "% :-)")
+                    pg.press('enter')
             if float(sortdict[each]) >= 3 and float(sortdict[each]) < 5:
                 mixer.init()
                 mixer.music.load("Alarm10.wav")
@@ -90,6 +98,9 @@ while anclajestot > 0:
                 print(" -------------------------")
                 print(" " + each + " esta subiendo mas!!")
                 print(" -------------------------")
+                if whats == 's':
+                    pg.write(" --------Aviso_PumpOmeter!-------- " + each + " subio " + str(float(sortdict[each])) + "% :-D")
+                    pg.press('enter')
             if float(sortdict[each]) >= 5:
                 mixer.init()
                 mixer.music.load("tada.wav")
@@ -97,6 +108,9 @@ while anclajestot > 0:
                 print(" -------------------------")
                 print(" " + each + " esta pumpeando!!")
                 print(" -------------------------")
+                if whats == 's':
+                    pg.write(" --------Aviso_PumpOmeter!-------- " + each + " subio " + str(float(sortdict[each])) + "% :-o")
+                    pg.press('enter')
         print(" ")
         print(" ****************")
         print(" Hora de Inicio: ", horadeinicio2)
@@ -106,6 +120,10 @@ while anclajestot > 0:
         wb.save(filename)
         cantrefresh1 = cantrefresh1 - 1
     anclajestot = anclajestot - 1
+
+if whats == 's':
+    pg.write(" --------Aviso_PumpOmeter!-------- ----------Sesion_finalizada----------")
+    pg.press('enter')
 print(" ")
 print(" Gracias por usar PumpOmeter!")
 time.sleep(5)
